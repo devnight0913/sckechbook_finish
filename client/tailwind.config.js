@@ -1,5 +1,6 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  purge: [".src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  important: '#root',
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -8,4 +9,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+  corePlugins: {
+    preflight: false,
+  },
+};

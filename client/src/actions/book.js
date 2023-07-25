@@ -1,5 +1,12 @@
 import api from "../utils/api";
-import { GET_BOOKS, BOOK_ERROR, MORE_LOADED, BOOK_CONTENT } from "./types";
+import {
+  GET_BOOKS,
+  BOOK_ERROR,
+  MORE_LOADED,
+  BOOK_CONTENT,
+  AUTH_SEARCH,
+  BOOK_LOADING,
+} from "./types";
 
 export const loadBook = () => async (dispatch) => {
   try {
@@ -14,7 +21,6 @@ export const loadBook = () => async (dispatch) => {
 };
 
 export const moreBook = (pageNumber) => async (dispatch) => {
-  console.log(pageNumber);
   try {
     const res = await api.get(`/submissions/more?page=${pageNumber}`);
     dispatch({
@@ -22,11 +28,10 @@ export const moreBook = (pageNumber) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     dispatch({ type: BOOK_ERROR });
   }
 };
-
 
 export const getContent = (bookId) => async (dispatch) => {
   try {
@@ -36,7 +41,24 @@ export const getContent = (bookId) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    dispatch({ type: BOOK_ERROR });
+  }
+};
+
+export const authGet = (word, item) => async (dispatch) => {
+  dispatch({
+    type: BOOK_LOADING,
+    payload: [],
+  });
+  try {
+    const res = await api.get(`/submissions/search?word=${word}&item=${item}`);
+    dispatch({
+      type: AUTH_SEARCH,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
     dispatch({ type: BOOK_ERROR });
   }
 };

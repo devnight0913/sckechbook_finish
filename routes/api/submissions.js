@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
 
 router.get("/more", async (req, res) => {
   const perPage = 9;
-  console.log(req.query)
   try {
     const books = await Submissions.find({})
       .skip(req.query.page * perPage)
@@ -31,11 +30,32 @@ router.get("/more", async (req, res) => {
 });
 
 router.get("/book", async (req, res) => {
-  console.log(req.query)
   try {
-    const content = await Submissions.find({lid: req.query.lid}).select({digitizationFiles: 1});
+    const content = await Submissions.find({ lid: req.query.lid }).select({
+      digitizationFiles: 1,
+    });
     const bookContent = content[0].digitizationFiles;
     res.json(bookContent);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Error");
+  }
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    if (req.query.item === "auth") {
+      const contents = await Submissions.find({
+        artistName: req.query.word,
+      }).select({ frontPage: 1, title: 1, lid: 1, artistName: 1 });
+      res.json(contents);
+    }
+    else if(req.query.item === "title"){
+      const contents = await Submissions.find({
+        title: req.query.word,
+      }).select({ frontPage: 1, title: 1, lid: 1, artistName: 1 });
+      res.json(contents);
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error");

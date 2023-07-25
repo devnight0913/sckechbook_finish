@@ -7,14 +7,18 @@ import { Link, useParams } from "react-router-dom";
 
 const Footer = ({ bookContent, getContent }) => {
   const bookId = useParams().id;
+  const search = useParams().search;
+  const item = useParams().item;
+  const linkTo = search ? `/search/${search}/${item}` : "/";
+  console.log(linkTo);
   useEffect(() => {
     getContent(bookId);
   }, [getContent, bookId]);
 
   return (
-    <div className="m-4">
+    <div className="m-5">
       <Container>
-        <Grid container spacing={0}>
+        <Grid container columnSpacing={0} rowSpacing={3}>
           {bookContent.length ? (
             <>
               {bookContent.map((content, index) => {
@@ -29,9 +33,11 @@ const Footer = ({ bookContent, getContent }) => {
             <h1>There is no Content</h1>
           )}
         </Grid>
-        <Link to="/">
-          <Button>Go Back</Button>
-        </Link>
+        <div className="go-back">
+          <Link to={linkTo}>
+            <Button variant="contained">Go Back</Button>
+          </Link>
+        </div>
       </Container>
     </div>
   );

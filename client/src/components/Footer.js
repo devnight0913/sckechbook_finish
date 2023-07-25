@@ -16,7 +16,6 @@ const Footer = ({ books, page, loadBook }) => {
   }, [loadBook, page]);
   const dispatch = useDispatch();
   function moreLoad() {
-    console.log(page);
     dispatch(moreBook(page));
   }
   return (
@@ -36,8 +35,7 @@ const Footer = ({ books, page, loadBook }) => {
             );
           })}
         </Grid>
-        <div>
-          <h1>More Loader</h1>
+        <div className="more-button">
           <Button variant="contained" onClick={moreLoad}>
             More Loader
           </Button>
@@ -59,12 +57,3 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, { loadBook, moreBook })(Footer);
 
-// Landing.propTypes = {
-//   isAuthenticated: PropTypes.bool,
-// };
-
-// const mapStateToProps = (state) => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-// });
-// export default connect(mapStateToProps)(Landing);
-// export default connect(mapStateToProps, { logout })(Navbar);

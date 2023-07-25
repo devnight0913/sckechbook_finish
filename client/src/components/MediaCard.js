@@ -14,7 +14,7 @@ export default function MediaCard({title, imgURL}) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          <div className="title">Title: {title}</div>
         </Typography>
       </CardContent>
     </Card>
